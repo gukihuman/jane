@@ -1,0 +1,40 @@
+{
+  "prisma.fileWatcher": false,
+  "files.exclude": {
+    ".nuxt": true,
+    ".vscode": true,
+    "node_modules": true,
+    "tests": true,
+    "package-lock.json": true,
+    "vitest.config.ts": true,
+    ".prettierignore": true,
+    "public": true
+  },
+  "workspace.isHidden": true,
+  "folder-path-color.folders": [
+    {
+      "path": "systems",
+      "color": "blue"
+    },
+    {
+      "path": "components",
+      "color": "magenta"
+    },
+    {
+      "path": "data",
+      "color": "red"
+    },
+    {
+      "path": "modules",
+      "color": "cyan"
+    },
+    {
+      "path": "interface",
+      "color": "green"
+    },
+    {
+      "path": "entities",
+      "color": "yellow"
+    }
+  ]
+}
