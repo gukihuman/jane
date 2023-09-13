@@ -1,5 +1,18 @@
 const store: AnyObject = {
-  digitalTranscript: "",
-  userTranscript: "",
+  // controller: {},
+  mic: true,
+  userTalking: false,
+  digitalTalking: false,
+  recognizing: true,
+  userLine: "",
+  messages: [
+    {
+      role: "system",
+      content: TEXT.systemMessage,
+    },
+  ],
+  updateChatIndex: 0,
+  updateChat: "chat0",
 }
+
 export const STORE = LIB.store(store)

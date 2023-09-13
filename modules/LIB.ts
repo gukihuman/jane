@@ -1,4 +1,36 @@
 class Lib {
+  private totalMessagesLength() {
+    let result = 0
+    _.forEach(STORE.messages, (message) => {
+      result += message.content.split(" ").length
+    })
+    return result
+  }
+  limitMessegesLength(messagesArray, max = 1024) {
+    let totalLength = this.totalMessagesLength()
+    let counter = 0
+    while (totalLength > max && counter < 100) {
+      counter++
+      // Remove the second item
+      if (messagesArray.length > 1) messagesArray.splice(1, 1)
+      totalLength = this.totalMessagesLength()
+    }
+    return messagesArray
+  }
+  mergeArrays(arr1: any[], arr2: any[]): any[] {
+    let result: any[] = []
+    let i = 0
+    while (arr1.length > 0 || arr2.length > 0) {
+      if (arr1.length > 0) {
+        result = result.concat(arr1.splice(0, i + 1))
+      }
+      if (arr2.length > 0) {
+        result = result.concat(arr2.splice(0, i + 1))
+      }
+      i++
+    }
+    return result
+  }
   addGetter(object: AnyObject, name: string, fn: () => any) {
     Object.defineProperty(object, name, {
       get: fn,
@@ -6,7 +38,6 @@ class Lib {
       configurable: true,
     })
   }
-
   /** @returns string of time for example "22:43:54" */
   timeNow(): string {
     function _pad(num: number): string {
@@ -46,7 +77,6 @@ class Lib {
     })
     return moved
   }
-
   /** @returns array of sorted keys of object by descendant order of its number values, for example {a: -1, b: 1, c: 2} became ["c", "b", "a"]" */
   sortedKeys(object) {
     return _.sortBy(_.keys(object), (key) => -object[key])
@@ -86,99 +116,6 @@ class Lib {
       storeObject[key] = value
     })
     return storeObject
-  }
-  hero(id: number) {
-    if (id === WORLD.heroId) return true
-    return false
-  }
-
-  /**
-   * This function takes spritesheet instance created by PIXI.Spritesheet and adds alternative "gParse" function to it. "gParse" removes caching from default "parse" function. This caching is binded to texture name like "idle.png" which is used repeatedly in this project by different entities. That causes lags. Cache in Spirit of Lira is handled separatly with binding to entity name.
-   * @param spritesheet - instance of PIXI.Spritesheet
-   */
-  addParseWithoutCaching(spritesheet: gSpritesheet) {
-    const BATCH_SIZE = 1e3
-
-    spritesheet.gProcessFrames = function (initialFrameIndex) {
-      let frameIndex = initialFrameIndex
-      const maxFrames = BATCH_SIZE
-      while (
-        frameIndex - initialFrameIndex < maxFrames &&
-        frameIndex < this._frameKeys.length
-      ) {
-        const i = this._frameKeys[frameIndex]
-        const data = this._frames[i]
-        const rect = data.frame
-        if (rect) {
-          let frame: Rectangle | undefined = undefined
-          let trim: Rectangle | undefined = undefined
-          const sourceSize =
-            data.trimmed !== false && data.sourceSize
-              ? data.sourceSize
-              : data.frame
-          const orig = new PIXI.Rectangle(
-            0,
-            0,
-            Math.floor(sourceSize.w) / this.resolution,
-            Math.floor(sourceSize.h) / this.resolution
-          )
-          if (data.rotated) {
-            frame = new PIXI.Rectangle(
-              Math.floor(rect.x) / this.resolution,
-              Math.floor(rect.y) / this.resolution,
-              Math.floor(rect.h) / this.resolution,
-              Math.floor(rect.w) / this.resolution
-            )
-          } else {
-            frame = new PIXI.Rectangle(
-              Math.floor(rect.x) / this.resolution,
-              Math.floor(rect.y) / this.resolution,
-              Math.floor(rect.w) / this.resolution,
-              Math.floor(rect.h) / this.resolution
-            )
-          }
-          if (data.trimmed !== false && data.spriteSourceSize) {
-            trim = new PIXI.Rectangle(
-              Math.floor(data.spriteSourceSize.x) / this.resolution,
-              Math.floor(data.spriteSourceSize.y) / this.resolution,
-              Math.floor(rect.w) / this.resolution,
-              Math.floor(rect.h) / this.resolution
-            )
-          }
-          this.textures[i] = new PIXI.Texture(
-            this.baseTexture,
-            frame,
-            orig,
-            trim,
-            data.rotated ? 2 : 0,
-            data.anchor
-          )
-          // this is the line that was turned off:
-          // Texture.addToCache(this.textures[i], i)
-        }
-        frameIndex++
-      }
-    }
-
-    spritesheet.gParse = function () {
-      return new Promise((resolve) => {
-        this._callback = resolve
-        this._batchIndex = 0
-        if (this._frameKeys.length <= BATCH_SIZE) {
-          //
-          this.gProcessFrames(0) // changed to modified function
-          this._processAnimations()
-          this._parseComplete()
-        } else {
-          this._nextBatch()
-        }
-      })
-    }
-  }
-  logIfHero(id: number, ...args) {
-    if (id === WORLD.heroId) {
-      console.log(...args)
-    }
   }
 }
 
