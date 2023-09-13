@@ -7,8 +7,7 @@
     "tests": true,
     "package-lock.json": true,
     "vitest.config.ts": true,
-    ".prettierignore": true,
-    "public": true
+    ".prettierignore": true
   },
   "workspace.isHidden": true,
   "folder-path-color.folders": [
@@ -36,5 +35,9 @@
       "path": "entities",
       "color": "yellow"
     }
-  ]
+  ],
+  "search.exclude": {
+    "**/.node_modules": true,
+    "**/node_modules": false
+  }
 }

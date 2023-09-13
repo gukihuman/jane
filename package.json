@@ -1,7 +1,7 @@
 {
   "private": true,
   "scripts": {
-    "dev": "nuxt dev",
+    "dev": "nuxt dev --max-old-space-size=4096",
     "test": "vitest",
     "testui": "vitest --ui",
     "build": "npx prisma db push && nuxt build",
@@ -21,7 +21,6 @@
     "lodash": "^4.17.21",
     "nuxt": "^3.0.0",
     "pinia": "^2.0.27",
-    "pixi.js": "^7.0.5",
     "prisma": "^4.8.0",
     "pug": "^3.0.2",
     "pug-plain-loader": "^1.1.0",
@@ -32,7 +31,9 @@
   "dependencies": {
     "@prisma/client": "^4.8.0",
     "dotenv": "^16.0.3",
+    "eventsource-parser": "^1.0.0",
     "guki-input-controller": "^0.8.7",
+    "openai": "^4.6.0",
     "pixi-filters": "^5.2.1",
     "vite-plugin-string": "^1.2.1"
   }

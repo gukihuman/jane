@@ -1,4 +1,5 @@
+// import something to make nuxt see this types
+import lodash from "lodash"
 declare global {
-  // example
-  // type Entity = { [key: string]: any }
+  type AnyObject = { [key: string]: any }
 }

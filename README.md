@@ -1,3 +1,2 @@
-## Spirit of Lira
+## readme
 
-[early dev build](https://spirit-of-lira.vercel.app/)
