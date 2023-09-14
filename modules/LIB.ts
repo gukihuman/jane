@@ -1,19 +1,19 @@
 class Lib {
-  private totalMessagesLength() {
+  private totalMessagesLength(messagesArray) {
     let result = 0
-    _.forEach(STORE.messages, (message) => {
+    _.forEach(messagesArray, (message) => {
       result += message.content.split(" ").length
     })
     return result
   }
   limitMessegesLength(messagesArray, max = 1024) {
-    let totalLength = this.totalMessagesLength()
+    let totalLength = this.totalMessagesLength(messagesArray)
     let counter = 0
     while (totalLength > max && counter < 100) {
       counter++
       // Remove the second item
       if (messagesArray.length > 1) messagesArray.splice(1, 1)
-      totalLength = this.totalMessagesLength()
+      totalLength = this.totalMessagesLength(messagesArray)
     }
     return messagesArray
   }

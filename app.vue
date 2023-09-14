@@ -1,28 +1,20 @@
 <template lang="pug">
 div(class="bg-gray-900 w-screen min-h-screen")
-  div(class="h-5 w-full flex justify-start p-4 mb-4 gap-4")
-    transition: div(
-      class="bg-red-400 w-4 h-4 rounded-full opacity-0"
-      :class="{'opacity-100': STORE.recognizing}"
-    )
-    transition: div(
-      class="bg-gray-300 w-4 h-4 rounded-full opacity-0"
-      :class="{'opacity-100': STORE.userTalking}"
-    )
-    transition: div(
-      class="bg-[#d5bdaf] w-4 h-4 rounded-full opacity-0"
-      :class="{'opacity-100': STORE.digitalTalking}"
-    )
+  indicators
   div(class="w-full flex justify-center rounded-lg")
-    div(class="w-[700px] min-h-[500px] bg-gray-800 rounded-lg p-4")
+    div(
+      class="w-[700px] h-[500px]  bg-gray-800 rounded-lg p-4 overflow-y-scroll"
+      ref="chat"
+    )
       p(
         v-for="(message, index) in STORE.messages"
         :key="STORE.updateChat + index"
-        class="bg-gray-800 p-2 rounded-lg"
+        class="bg-gray-800 p-2 rounded-lg text-[20px]"
         :class="textClass(message)"
       ) {{message.content}}
 </template>
 <script setup lang="ts">
+const chat = ref(null)
 const textClass = computed(() => {
   return (message) => {
     return {
@@ -34,11 +26,16 @@ const textClass = computed(() => {
   }
 })
 onMounted(() => {
+  REFS.chat = chat.value
   let newLine = ""
   STORE.controller = new AbortController()
   const onSpeeachEnd = _.debounce(() => {
     STORE.userTalking = false
     STORE.controller = new AbortController()
+    STORE.messages.push({
+      role: "system",
+      content: TEXT.eachTimeInstruction,
+    })
     OPEN_AI.fetch()
     STORE.userLine = ""
     newLine = ""
@@ -72,6 +69,7 @@ onMounted(() => {
     }
     STORE.updateChatIndex++
     STORE.updateChat = "chat" + STORE.updateChatIndex
+    REFS.chat.scrollTop = REFS.chat.scrollHeight
   }
   addEventListener("keydown", (e) => {
     if (e.key === "o") {
@@ -88,11 +86,22 @@ onMounted(() => {
   })
   setInterval(() => {
     if (STORE.recognizing || !STORE.mic) return
-    console.log("recognizing stopped, try to start")
     try {
       recognition.start()
     } catch (e) {}
   }, 200)
+  setInterval(() => {
+    if (Date.now() - STORE.lastTimeDigitalSpeak < OPEN_AI.timeBeforeThinkMS) {
+      return
+    }
+    if (!STORE.mic || STORE.digitalTalking) return
+    if (Math.random() > 0.08) return
+    STORE.messages.push({
+      role: "system",
+      content: TEXT.ownThoughtsInstruction,
+    })
+    OPEN_AI.fetch()
+  }, 1000)
 })
 </script>
 <style>
@@ -103,5 +112,21 @@ onMounted(() => {
 .v-enter-from,
 .v-leave-to {
   opacity: 0;
+}
+::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background-color: #2b333f;
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background-color: #424f62;
+}
+::-webkit-scrollbar-corner {
+  background-color: transparent;
+}
+::-webkit-scrollbar {
+  width: 10px;
 }
 </style>

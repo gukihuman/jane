@@ -3,6 +3,8 @@ class OpenAI {
   private apiKey = "pk-this-is-a-real-free-pool-token-for-everyone"
   private clarifyEach = 5
   private clarificationCounter = 0
+  private superShortInstructionChance = 0.3
+  timeBeforeThinkMS = 18000
   async fetch() {
     STORE.digitalTalking = true
     if (this.clarificationCounter <= 0) {
@@ -13,11 +15,17 @@ class OpenAI {
       })
     }
     this.clarificationCounter--
+    if (Math.random() < this.superShortInstructionChance) {
+      STORE.messages.push({
+        role: "system",
+        content: TEXT.superShortInstruction,
+      })
+    }
     STORE.messages = LIB.limitMessegesLength(STORE.messages, 1024)
     const body: AnyObject = {
       model: "gpt-3.5-turbo",
       messages: STORE.messages,
-      temperature: 1,
+      temperature: 1.5,
       stream: true,
     }
     const request: AnyObject = {
@@ -62,6 +70,7 @@ class OpenAI {
             digitalMessage.content += messageToAdd
             STORE.updateChatIndex++
             STORE.updateChat = "chat" + STORE.updateChatIndex
+            REFS.chat.scrollTop = REFS.chat.scrollHeight
           }
         }
       }
@@ -69,7 +78,11 @@ class OpenAI {
       console.log(e)
     } finally {
       STORE.digitalTalking = false
+      setTimeout(() => {
+        REFS.chat.scrollTop = REFS.chat.scrollHeight
+      }, 10)
       reader.releaseLock()
+      STORE.lastTimeDigitalSpeak = Date.now()
     }
   }
 }

@@ -13,6 +13,7 @@ const store: AnyObject = {
   ],
   updateChatIndex: 0,
   updateChat: "chat0",
+  lastTimeDigitalSpeak: Date.now(),
 }
 
 export const STORE = LIB.store(store)
