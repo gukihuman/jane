@@ -1,30 +1,34 @@
-class OpenAI {
+class Remote {
   private endpoint = `https://ai.fakeopen.com/v1/chat/completions`
   private apiKey = "pk-this-is-a-real-free-pool-token-for-everyone"
   private clarifyEach = 5
   private clarificationCounter = 0
   private superShortInstructionChance = 0.3
-  timeBeforeThinkMS = 18000
+  private abortController = new AbortController()
+  timeBeforeThinkMS = 28_000
+  init = () => (this.abortController = new AbortController())
+  cancelAbort = () => (this.abortController = new AbortController())
+  abort = () => this.abortController.abort()
   async fetch() {
-    STORE.digitalTalking = true
+    GLOBAL.digitalTalking = true
     if (this.clarificationCounter <= 0) {
       this.clarificationCounter = this.clarifyEach
-      STORE.messages.push({
+      GLOBAL.messages.push({
         role: "system",
         content: TEXT.clarification,
       })
     }
     this.clarificationCounter--
     if (Math.random() < this.superShortInstructionChance) {
-      STORE.messages.push({
+      GLOBAL.messages.push({
         role: "system",
         content: TEXT.superShortInstruction,
       })
     }
-    STORE.messages = LIB.limitMessegesLength(STORE.messages, 1024)
+    GLOBAL.messages = LIB.limitMessegesLength(GLOBAL.messages, 4096)
     const body: AnyObject = {
       model: "gpt-3.5-turbo",
-      messages: STORE.messages,
+      messages: GLOBAL.messages,
       temperature: 1.5,
       stream: true,
     }
@@ -35,7 +39,7 @@ class OpenAI {
       },
       method: "POST",
       body: JSON.stringify(body),
-      signal: STORE.controller.signal,
+      signal: this.abortController.signal,
     }
     let response: any = await fetch(this.endpoint, request)
     const sseStream = response.body
@@ -45,7 +49,7 @@ class OpenAI {
       role: "assistant",
       content: "",
     }
-    STORE.messages.push(digitalMessage)
+    GLOBAL.messages.push(digitalMessage)
     try {
       while (true) {
         const { done, value } = await reader.read()
@@ -68,22 +72,22 @@ class OpenAI {
             }
             if (!messageToAdd) continue
             digitalMessage.content += messageToAdd
-            STORE.updateChatIndex++
-            STORE.updateChat = "chat" + STORE.updateChatIndex
+            GLOBAL.updateChatIndex++
+            GLOBAL.updateChat = "chat" + GLOBAL.updateChatIndex
             REFS.chat.scrollTop = REFS.chat.scrollHeight
           }
         }
       }
     } catch (e) {
-      console.log(e)
     } finally {
-      STORE.digitalTalking = false
+      GLOBAL.digitalTalking = false
       setTimeout(() => {
         REFS.chat.scrollTop = REFS.chat.scrollHeight
       }, 10)
       reader.releaseLock()
-      STORE.lastTimeDigitalSpeak = Date.now()
+      GLOBAL.lastTimeDigitalSpeak = Date.now()
+      VOICE.read(digitalMessage.content)
     }
   }
 }
-export const OPEN_AI = new OpenAI()
+export const REMOTE = new Remote()

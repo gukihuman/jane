@@ -2,6 +2,8 @@ import GukiInputController from "guki-input-controller"
 export const INPUT = new GukiInputController()
 import lodash from "lodash"
 export const _ = lodash
+import * as pixi from "pixi.js"
+export const PIXI = pixi
 export default defineNuxtPlugin(async () => {
   // example
   // await load(import.meta.glob("@/assets/**/*"), ASSETS.jsons, false, "json")
