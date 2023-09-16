@@ -1,12 +1,16 @@
 class Settings {
   inputEvents = {
     keyboard: {
-      turnMic: "o",
+      toggleMic: "o",
+      toggleRemote: "e",
+      toggleLanguage: "c",
+      toggleVoices: "u",
     },
     mouse: {},
     gamepad: {},
   }
-  gameplay = {}
+  language = "en-US"
+  voice = "Microsoft Zira - English (United States)"
   emitEvents() {
     _.forEach(this.inputEvents, (settingList, device) => {
       _.forEach(settingList, (button, setting) => {
@@ -20,6 +24,21 @@ class Settings {
     WORLD.loop.add(() => {
       this.emitEvents()
     }, "SETTINGS")
+    this.addEvents()
+  }
+  addEvents() {
+    EVENTS.onSingle("toggleLanguage", () => {
+      GLOBAL.language = !GLOBAL.language
+      if (GLOBAL.voices && GLOBAL.language) {
+        GLOBAL.voices = false
+      }
+    })
+    EVENTS.onSingle("toggleVoices", () => {
+      GLOBAL.voices = !GLOBAL.voices
+      if (GLOBAL.voices && GLOBAL.language) {
+        GLOBAL.language = false
+      }
+    })
   }
 }
 export const SETTINGS = new Settings()

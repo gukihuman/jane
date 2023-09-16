@@ -1,19 +1,30 @@
 class Voice {
   private speechSynthesis
   private utterance
-  private voices
+  voiceData
+  languages
+  voices
   init() {
     this.speechSynthesis = window.speechSynthesis
     this.utterance = new SpeechSynthesisUtterance()
     this.speechSynthesis.onvoiceschanged = () => {
-      this.voices = this.speechSynthesis.getVoices()
+      this.voiceData = this.speechSynthesis.getVoices()
+      const languagesArray = this.voiceData.map((voice) => voice.lang)
+      const voicesArray = this.voiceData.map((voice) => voice.name)
+      this.languages = [...new Set(languagesArray)]
+      this.voices = [...new Set(voicesArray)]
+      setTimeout(() => {
+        GLOBAL.updateSettings++
+      }, 1000)
     }
   }
   read(line: string) {
     this.utterance.text = line
-    console.log(this.voices)
-    if (this.voices.length > 300) {
-      this.utterance.voice = this.voices[117]
+    let desiredVoice = this.voiceData.find(
+      (voice) => voice.name === SETTINGS.voice
+    )
+    if (desiredVoice !== undefined) {
+      this.utterance.voice = desiredVoice
     }
     this.speechSynthesis.speak(this.utterance)
   }

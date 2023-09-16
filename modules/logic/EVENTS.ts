@@ -1,7 +1,10 @@
 class Events {
   list: { [event: string]: Array<(AnyObject) => void> } = {}
   listOfSingle: { [event: string]: Array<() => void> } = {
-    turnMic: [],
+    toggleMic: [],
+    toggleRemote: [],
+    toggleLanguage: [],
+    toggleVoices: [],
   }
   active: [string, AnyObject][] = []
   activeSingle: string[] = []

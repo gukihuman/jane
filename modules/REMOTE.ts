@@ -1,15 +1,23 @@
 class Remote {
+  timeBeforeThinkMS = 28_000
   private endpoint = `https://ai.fakeopen.com/v1/chat/completions`
   private apiKey = "pk-this-is-a-real-free-pool-token-for-everyone"
   private clarifyEach = 5
   private clarificationCounter = 0
   private superShortInstructionChance = 0.3
   private abortController = new AbortController()
-  timeBeforeThinkMS = 28_000
-  init = () => (this.abortController = new AbortController())
-  cancelAbort = () => (this.abortController = new AbortController())
+  resetAbortController = () => (this.abortController = new AbortController())
+  init() {
+    EVENTS.onSingle("toggleRemote", () => {
+      if (GLOBAL.remote) {
+        GLOBAL.remote = false
+        this.abort()
+      } else GLOBAL.remote = true
+    })
+  }
   abort = () => this.abortController.abort()
   async fetch() {
+    if (!GLOBAL.remote) return
     GLOBAL.digitalTalking = true
     if (this.clarificationCounter <= 0) {
       this.clarificationCounter = this.clarifyEach
@@ -72,8 +80,7 @@ class Remote {
             }
             if (!messageToAdd) continue
             digitalMessage.content += messageToAdd
-            GLOBAL.updateChatIndex++
-            GLOBAL.updateChat = "chat" + GLOBAL.updateChatIndex
+            CHAT.update()
             REFS.chat.scrollTop = REFS.chat.scrollHeight
           }
         }

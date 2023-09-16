@@ -1,5 +1,10 @@
 const store: AnyObject = {
+  chatUpdateIndex: 0, // used as reactive dependency
+  updateSettings: 0, // same
+  remote: false,
   mic: true,
+  language: false,
+  voices: false,
   userTalking: false,
   digitalTalking: false,
   recognizing: true,
@@ -10,8 +15,6 @@ const store: AnyObject = {
       content: TEXT.systemMessage,
     },
   ],
-  updateChatIndex: 0,
-  updateChat: "chat0",
   lastTimeDigitalSpeak: Date.now(),
 }
 export const GLOBAL = LIB.store(store)
