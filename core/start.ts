@@ -8,6 +8,7 @@ export default defineNuxtPlugin(async (app) => {
     SETTINGS.init()
     INPUT.init()
     CHAT.init()
+    GLOBAL.init()
     WORLD.loop.add(() => {
       INPUT.update()
     })

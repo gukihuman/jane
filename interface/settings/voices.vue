@@ -14,6 +14,7 @@ const update = ref(0)
 const handleClick = (voice) => {
   SETTINGS.voice = voice.name
   update.value++
+  LOCAL.update()
 }
 const filteredVoices = computed(() => {
   if (!VOICE.voiceData) return

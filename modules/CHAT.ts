@@ -1,6 +1,7 @@
 class Chat {
   recognition
   update = () => GLOBAL.chatUpdateIndex++
+  currentMessage
   init() {
     const w: any = window // type issues
     const SpeechRecognition = w.SpeechRecognition || w.webkitSpeechRecognition
@@ -10,10 +11,6 @@ class Chat {
     const onSpeeachEnd = _.debounce(() => {
       GLOBAL.userTalking = false
       REMOTE.resetAbortController()
-      GLOBAL.messages.push({
-        role: "system",
-        content: TEXT.eachTimeInstruction,
-      })
       REMOTE.fetch()
       GLOBAL.userLine = ""
       newLine = ""
@@ -21,37 +18,43 @@ class Chat {
     this.recognition.continuous = true
     this.recognition.interimResults = true
     this.recognition.lang = "en-US"
-    this.recognition.start()
+    if (GLOBAL.mic) this.recognition.start()
     this.recognition.onstart = () => (GLOBAL.recognizing = true)
     this.recognition.onend = () => (GLOBAL.recognizing = false)
     this.recognition.onresult = (event) => {
       REMOTE.abort()
       VOICE.stop()
       GLOBAL.userTalking = true
-      onSpeeachEnd()
+      onSpeeachEnd() // debounced
 
       let interimTranscript = ""
-      for (let i = event.resultIndex; i < event.results.length; i++) {
+      const last: any = _.last(GLOBAL.messages)
+      if (last.role !== "user") {
+        GLOBAL.messages.push({
+          role: "user",
+          content: "",
+        })
+        this.currentMessage = GLOBAL.messages[GLOBAL.messages.length - 1]
+      }
+      let newMessage = false
+      for (let i = event.resultIndex; i < event.results.length; ++i) {
         const transcript = event.results[i][0].transcript
         if (event.results[i].isFinal) {
+          interimTranscript += transcript
           GLOBAL.messages.push({
             role: "user",
-            content: transcript,
+            content: "",
           })
+          this.currentMessage = GLOBAL.messages[GLOBAL.messages.length - 1]
+          newMessage = true
         } else {
           interimTranscript += transcript
         }
       }
-
-      // Update latest user message or GLOBAL.userLine with interimTranscript
-      const lastUserMessage = GLOBAL.messages
-        .filter((message) => message.role === "user")
-        .pop()
-      if (lastUserMessage) {
-        lastUserMessage.content = interimTranscript
-      } else {
-        GLOBAL.userLine = interimTranscript
+      if (!newMessage) {
+        this.currentMessage.content = interimTranscript
       }
+      // console.log(GLOBAL.messages)
 
       this.update()
       REFS.chat.scrollTop = REFS.chat.scrollHeight
@@ -63,6 +66,7 @@ class Chat {
       } catch (e) {}
     }, 200)
     setInterval(() => {
+      if (!GLOBAL.remote) return
       if (Date.now() - GLOBAL.lastTimeDigitalSpeak < REMOTE.timeBeforeThinkMS) {
         return
       }
@@ -77,7 +81,7 @@ class Chat {
   }
   private addEvents(recognition) {
     EVENTS.onSingle("toggleMic", () => {
-      if (GLOBAL.recognizing) {
+      if (GLOBAL.mic) {
         recognition.stop()
         GLOBAL.recognizing = false
         GLOBAL.mic = false

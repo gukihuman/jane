@@ -6,7 +6,7 @@ div(class="pt-[69px] w-full h-[508px] absolute flex justify-center")
       :class="{'bg-slate-600': SETTINGS.language === lang}"
       v-for="(lang, index) in VOICE.languages"
       :key="'lang-' + update + '-' + index"
-      @click="SETTINGS.language = lang; update++"
+      @click="SETTINGS.language = lang; update++; LOCAL.update()"
     ) {{ lang }}
 </template>
 <script setup lang="ts">

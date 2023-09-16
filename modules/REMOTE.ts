@@ -1,13 +1,15 @@
 class Remote {
-  timeBeforeThinkMS = 28_000
+  timeBeforeThinkMS = 38_000
   private endpoint = `https://ai.fakeopen.com/v1/chat/completions`
   private apiKey = "pk-this-is-a-real-free-pool-token-for-everyone"
   private clarifyEach = 5
-  private clarificationCounter = 0
+  private clarificationCounter = 5
   private superShortInstructionChance = 0.3
   private abortController = new AbortController()
   resetAbortController = () => (this.abortController = new AbortController())
   init() {
+    const api = useRuntimeConfig().OPEN_AI_KEY
+    // console.log(api)
     EVENTS.onSingle("toggleRemote", () => {
       if (GLOBAL.remote) {
         GLOBAL.remote = false
@@ -33,6 +35,7 @@ class Remote {
         content: TEXT.superShortInstruction,
       })
     }
+
     GLOBAL.messages = LIB.limitMessegesLength(GLOBAL.messages, 4096)
     const body: AnyObject = {
       model: "gpt-3.5-turbo",
@@ -92,8 +95,12 @@ class Remote {
         REFS.chat.scrollTop = REFS.chat.scrollHeight
       }, 10)
       reader.releaseLock()
-      GLOBAL.lastTimeDigitalSpeak = Date.now()
-      VOICE.read(digitalMessage.content)
+      let cleanContent = digitalMessage.content.replace(
+        /(\u00a9|\u00ae|[\u2000-\u3300]|\ud83c[\ud000-\udfff]|\ud83d[\ud000-\udfff]|\ud83e[\ud000-\udfff])/g,
+        ""
+      )
+      console.log(cleanContent)
+      VOICE.read(cleanContent)
     }
   }
 }
