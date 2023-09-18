@@ -1,12 +1,9 @@
-import { _pushCollision } from "../db/_pushCollision"
-
-export default defineEventHandler(async (event) => {
+import { DATABASE } from "../database"
+export default eventHandler(async (event) => {
   const body = await readBody(event)
-  const reqData = {
+  const request = {
     name: body.name,
-    accessKey: body.accessKey,
     collisionData: body.collisionData,
   }
-  const res = await _pushCollision(reqData)
-  return res
+  return await DATABASE.pushCollision(request)
 })

@@ -6,10 +6,14 @@ export default defineNuxtConfig({
     },
   },
   runtimeConfig: {
-    OPEN_AI_KEY: process.env.OPEN_AI_KEY,
-    HUGGINGFACE_TOKEN: process.env.HUGGINGFACE_TOKEN,
+    public: {
+      COHERE_KEY: process.env.COHERE_KEY,
+      OPEN_AI_ENDPOINT: process.env.OPEN_AI_ENDPOINT,
+      OPEN_AI_KEY: process.env.OPEN_AI_KEY,
+    },
   },
   modules: [
+    "~/server/socketio",
     "@nuxtjs/tailwindcss",
     [
       "@pinia/nuxt",

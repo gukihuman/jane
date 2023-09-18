@@ -54,8 +54,6 @@ class Chat {
       if (!newMessage) {
         this.currentMessage.content = interimTranscript
       }
-      // console.log(GLOBAL.messages)
-
       this.update()
       REFS.chat.scrollTop = REFS.chat.scrollHeight
     }

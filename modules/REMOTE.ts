@@ -1,15 +1,16 @@
 class Remote {
   timeBeforeThinkMS = 38_000
-  private endpoint = `https://ai.fakeopen.com/v1/chat/completions`
-  private apiKey = "pk-this-is-a-real-free-pool-token-for-everyone"
+  private endpoint
+  private apiKey
   private clarifyEach = 5
   private clarificationCounter = 5
   private superShortInstructionChance = 0.3
   private abortController = new AbortController()
   resetAbortController = () => (this.abortController = new AbortController())
   init() {
-    const api = useRuntimeConfig().OPEN_AI_KEY
-    // console.log(api)
+    const config = useRuntimeConfig().public
+    this.endpoint = config.OPEN_AI_ENDPOINT
+    this.apiKey = config.OPEN_AI_KEY
     EVENTS.onSingle("toggleRemote", () => {
       if (GLOBAL.remote) {
         GLOBAL.remote = false
@@ -99,7 +100,6 @@ class Remote {
         /(\u00a9|\u00ae|[\u2000-\u3300]|\ud83c[\ud000-\udfff]|\ud83d[\ud000-\udfff]|\ud83e[\ud000-\udfff])/g,
         ""
       )
-      console.log(cleanContent)
       VOICE.read(cleanContent)
     }
   }

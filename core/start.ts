@@ -1,6 +1,7 @@
 export default defineNuxtPlugin(async (app) => {
   app.hook("app:mounted", () => startApp())
   async function startApp() {
+    SOCKET.init()
     WORLD.init()
     VOICE.init()
     REMOTE.init()
