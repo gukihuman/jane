@@ -1,0 +1,39 @@
+modules\CONFIG.ts: This TypeScript file defines the "GukiConfig" class, responsible for managing game configuration settings. It imports and merges user-defined and default configurations, handles priorities for components and systems, and exports an instance named "CONFIG" for customization.
+
+modules\EFFECTS.ts: This TypeScript class, "Effects," manages game effects with front and back layers. It initializes, handles the removal of expired effects, and exports an instance as "EFFECTS" for use in the game.
+
+modules\logic\COORDINATES.ts: This module handles coordinate calculations and vector operations in a game engine. It includes a Vector class and various utility functions for coordinates, conversions, and spatial calculations.
+
+modules\logic\ENTITY_FACTORY.ts: The "EntityFactory" class dynamically creates and manages game entities, handling components, dependencies, and injections. It is crucial for flexible entity creation in the game logic.
+
+modules\logic\EVENTS.ts: The "Events" class is an event management system that registers and executes events in the game. It handles regular and single events, associated logic, and efficient processing within the game loop.
+
+modules\logic\LIB.ts: This class, "Lib," provides a library of utility functions and methods for common tasks within the project, enhancing code organization and maintainability.
+
+modules\logic\LOCAL.ts: The "Local" class manages player data related to inventory and position, syncing with global game data and storing information in localStorage.
+
+modules\logic\SPRITE.ts: This class, "Spr," handles sprite management, animations, and effects in the game, using PIXI.js for rendering. It manages entity containers, animations, and visual effects.
+
+modules\reactive\ACTIVE_SCENE.ts: The "activeScene" object manages interactive scene progression and display, including steps, layers, and transitions. It exports as "ACTIVE_SCENE" for controlling scenes in the application.
+
+modules\reactive\GLOBAL.ts: The "global" object configures and controls various aspects of the game, including context, window scale, and input settings. It exports as "GLOBAL" for overall game behavior.
+
+modules\reactive\INTERFACE.ts: The "inter" object manages the game's user interface (UI) elements and their visibility based on the game context. It exports as "INTERFACE" for dynamic UI updates.
+
+modules\reactive\INVENTORY.ts: The "INVENTORY" object handles player inventory and equipment, allowing for item management and UI updates.
+
+modules\reactive\REFS.ts: The "REFS" object provides references or handles for elements or objects within a reactive system and is exported for use throughout the application.
+
+modules\SETTINGS.ts: The "Settings" class manages input and gameplay settings, including key mappings and gameplay options. It controls player input and exports as a configuration manager.
+
+modules\storage\ASSETS.ts: The "Assets" class manages game assets, such as images and JSON data, and exports an instance as "ASSETS" for asset management.
+
+modules\storage\ITEMS.ts: The "Items" class is part of game storage, managing clothing and weapons, and exports an instance as "ITEMS" for inventory-related operations.
+
+modules\storage\LAST.ts: The "Last" class manages game state information and exports an instance as "LAST" for accessing and manipulating the last known game state.
+
+modules\storage\MODELS.ts: The "Models" class appears to manage game-related data, including entities, components, and systems. It exports an instance as "MODELS" for managing resources.
+
+modules\storage\SCENE.ts: The "Scene" class seems to handle interactive narrative scenes, parsing markdown content and choices. It exports an instance as "SCENE" for scene management.
+
+modules\storage\SKILLS.ts: The "Skills" class manages a list of skills in the game and exports an instance as "SKILLS" for skill-related functionality.

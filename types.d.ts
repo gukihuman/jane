@@ -4,4 +4,8 @@ import { Ticker as tempTicker } from "pixi.js"
 declare global {
   type Ticker = tempTicker
   type AnyObject = { [key: string]: any }
+  type Messages = {
+    role: string
+    content: string
+  }[]
 }

@@ -1,0 +1,9 @@
+data\items\weapons\common-sword.ts: This file defines a template object for a common sword weapon in the game, specifying its appearance, hit effect, attack distance, and damage.
+
+data\scenes\optionsByImage.ts: This file defines an object mapping image names to properties like hue, x, and y coordinates, likely for configuring the visual elements of game scenes.
+
+data\scenes\s1-end.md: This file contains a scene description titled "s1-nighty-close" with a mysterious atmosphere, hinting at a completed ritual and a quest to help a girl for happiness.
+
+data\scenes\s1-start.md: This file contains dialogue between characters Lira and a spirit, where Lira seeks help with forest problems, leading to playful interactions and an intriguing storyline.
+
+data\skills\attack.ts: This file exports an object representing an offensive game skill with properties like damage, mana cost, casting distance, and casting time, designed for character attacks in the game.

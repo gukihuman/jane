@@ -1,0 +1,5 @@
+core\load.ts: This TypeScript file loads resources and data for a game or application by importing external libraries like "GukiInputController" for input, "pixi.js" for rendering, "pixi-filters" for filters, and "lodash" for utilities. It defines an async Nuxt plugin with functions for loading entities, components, systems, items, skills, scenes, and assets from specified paths. Additionally, it associates metadata with webp assets for sprite-related work.
+
+core\start.ts: This TypeScript file initializes and starts a game application by importing necessary modules and defining a Nuxt plugin. It listens for "app:mounted," initializes components and systems like configuration, world setup, hero creation, and more. It also handles event listeners and system initialization.
+
+core\WORLD.ts: This TypeScript class, "World," manages a game world using PIXI.js. It handles rendering layers, game loop, and entity management. Key properties include "app," "entities," and "systems." The "loop" object manages game updates, and the "init" method sets up the PIXI Application and game loop. This file provides core functionality for game world management.

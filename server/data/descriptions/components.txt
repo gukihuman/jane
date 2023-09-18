@@ -1,0 +1,17 @@
+components\attributes.ts: This file exports an object defining attributes for a game component, including "mood" and "health," representing the component's state.
+
+components\move.ts: This file defines an object managing character movement attributes in a game, including speed, destination, and dependencies on other components.
+
+components\position.ts: This file defines a JavaScript object representing a position with x and y coordinates, used for tracking positions within a 2D space.
+
+components\shadow.ts: This file defines an exportable object representing a shadow for game entities, enhancing visual aesthetics with a realistic shadow effect.
+
+components\size.ts: This file exports an object with width and height properties, likely defining the size of a component or element.
+
+components\skills.ts: This file exports an object managing character skills in a game, including active skills, skill slots, and data modifications.
+
+components\sprite.ts: This file defines an object representing a sprite in a game or application, managing its behavior and appearance properties.
+
+components\state.ts: This file exports an object representing the state of a game component, managing properties related to its behavior and attributes.
+
+components\target.ts: This file defines an object responsible for managing the target of an entity in a game, allowing control over targeting interactions.

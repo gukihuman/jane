@@ -1,0 +1,27 @@
+interface\bars.vue: This Vue.js component displays health, mana, and experience bars in a game or app using Pug for the template and TypeScript for scripting. It includes four images positioned absolutely and utilizes the 'onMounted' lifecycle hook, likely for functionality upon component mounting.
+
+interface\core\fullscreen.vue: This Vue.js component manages fullscreen functionality, featuring a flexible fullscreen container. It uses Pug for the template, TypeScript for scripting, and toggles fullscreen state based on events.
+
+interface\core\game-window.vue: This Vue.js component creates a responsive game window, adjusting dimensions based on device size. TypeScript scripting is used to calculate and update the window's scale factor.
+
+interface\core\viewport.vue: This Vue.js Single File Component (SFC) manages the viewport, possibly related to Pixi.js. It includes a 'viewport' reference and conditional CSS classes based on 'INTERFACE.inventory'.
+
+interface\inventory.vue: This Vue.js SFC defines an inventory interface with a gray background and a non-draggable image. Its TypeScript script may perform actions during component mounting.
+
+interface\loading.vue: This Vue.js file creates a loading screen interface with text and a gamepad image, occupying the entire viewport. It's part of the game's loading phase.
+
+interface\overlay.vue: This Vue.js SFC handles overlays and transitions, using conditional display based on 'INTERFACE.target' and 'INTERFACE.inventory'. It plays a role in user interface management.
+
+interface\scene\choices.vue: This Vue.js component renders and manages player choices in a game scene, including interactive elements with text and logic for interactions, enhancing interactive narratives.
+
+interface\scene\dialogue.vue: This Vue.js component appears to manage dialogues in a game scene, rendering text based on passed properties and adjusting hue. It's part of the user interface for interactive text.
+
+interface\scene\focus-frame.vue: This Vue.js component displays a focus frame around scene elements, likely to highlight the selected option based on a passed index.
+
+interface\scene\images.vue: This Vue.js component renders scene images using Pug syntax, iterating over a collection of images and preventing dragging. It's part of a larger scene interface.
+
+interface\scene\scene.vue: This Vue.js component manages scenes, controlling appearance and transitions with CSS classes and exporting computed properties for transition speed.
+
+interface\scene\text-box.vue: This Vue.js component renders text boxes for dialogue or narrative text, applying animation effects to the text content and handling various text-related aspects.
+
+interface\target.vue: This Vue.js SFC displays a target element with health status and updates the health bar dynamically based on computed properties. It's a part of a larger user interface for game targets.
