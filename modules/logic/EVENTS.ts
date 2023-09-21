@@ -5,6 +5,7 @@ class Events {
     toggleRemote: [],
     toggleLanguage: [],
     toggleVoices: [],
+    setLink: [],
   }
   active: [string, AnyObject][] = []
   activeSingle: string[] = []

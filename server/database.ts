@@ -6,7 +6,7 @@ export interface Request {
   collisionData: string
 }
 class Database {
-  // a database example function
+  // a prisma example function, currently connected to mongodb
   pushCollision = async (request: Request) => {
     try {
       let res: any = await prisma.collision.upsert({

@@ -1,10 +1,9 @@
 <template lang="pug">
 div(class="bg-gray-900 w-full min-h-screen h-full")
   button(class="w-8 h-8 absolute bg-white" @click="SOCKET.io.emit('describeDirectories')")
-  div(class="max-w-[1000px] mx-auto md:p-8 flex justify-center gap-2")
-    div(class="rounded-lg w-[720px] bg-gray-800 md:p-2")
-      cube
-  keys(class="w-fit mx-auto hidden md:flex")
+  button(class="w-8 h-8 mt-12 absolute bg-green-300" @click="NEW_VOICE.fetch()")
+  input(v-model="NEW_VOICE.link" class="absolute")
+  chat
 </template>
 <style>
 .v-enter-active,

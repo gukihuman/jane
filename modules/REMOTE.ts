@@ -3,7 +3,7 @@ class Remote {
   private endpoint
   private apiKey
   private clarifyEach = 5
-  private clarificationCounter = 5
+  private clarificationCounter = 0
   private superShortInstructionChance = 0.3
   private abortController = new AbortController()
   resetAbortController = () => (this.abortController = new AbortController())

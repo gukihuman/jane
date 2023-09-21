@@ -1,11 +1,11 @@
-entities\alive\bunbo.ts: This file defines a game entity named "bunbo" with attributes such as size, sprite animations, movement speed, attack attributes, health, and state. Notably, it has dimensions of 70x60 units and animations conditioned on actions like movement and attacks, making "bunbo" a distinct game character.
+entities\alive\bunbo.ts: This file defines the attributes and characteristics of the "bunbo" game entity, including size, sprite animations, movement speed, skills, attributes, and state. It specifies the bunbo's size as 70x60 units and its movement speed as 8 units per tick. The file also details the bunbo's attack skill, attributes, and dead state delay.
 
-entities\alive\lira.ts: The file outlines a fantasy game character, Lira, with game attributes including size, speed, attack skills, and sprite details. Lira, with a health of 1500, is characterized as a flirty, funny, and informal female who may use explicit language and is summonable as a spirit. Her backstory emphasizes her belief in the fantasy world and lack of understanding of technology, with provided conversation examples deepening her character's immersive narrative.
+entities\alive\lira.ts: This file defines the character "Lira" in the game, describing her position, size, movement speed, skills, sprite details, attributes, and behavior in the game. It includes a conversation example reflecting Lira's character and context within the game world.
 
-entities\mousepoint.ts: This file manages the in-game behavior of a mouse point, adjusting its position based on game states or input devices. If activated by a gamepad, its position defaults to (0, 0); otherwise, it tries to follow the mouse cursor, adjusting for walkability or final character destinations. The point also has responsive animations scaling with proximity to the hero character.
+entities\mousepoint.ts: This file represents a game mouse pointer, defining its position and behavior. It adjusts the pointer's position based on input devices, hides it for gamepad input, and follows the cursor or hero character depending on the game state. The file also manages the pointer's visual aspects.
 
-entities\npc\bunny.ts: The file defines a non-playable character (NPC) bunny's position in a game, with specified coordinates likely indicating its spawn location.
+entities\npc\bunny.ts: This file defines an NPC with a specific position (x: 2880, y: 2408) within the game world, likely for spawning or positioning purposes.
 
-entities\static\bridge-fence.ts: This file exports an object detailing the position of a static game entity, a bridge fence, at coordinates (2049, 2599), serving as an interactable or navigational element in the game environment.
+entities\static\bridge-fence.ts: This file defines a static entity, a bridge fence, with a position at coordinates (x: 2049, y: 2599) in the game world, typically used for decorative or environmental elements.
 
-entities\static\magic-tree.ts: The file outlines a static game entity, a magic tree, with its position marked at coordinates (1203, 1432), aiding the game engine in rendering and interaction within the game world.
+entities\static\magic-tree.ts: This file defines a static entity, a "magic tree," with a position at coordinates (x: 1203, y: 1432) in the game world, enabling rendering and interaction within the game engine.

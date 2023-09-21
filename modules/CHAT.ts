@@ -63,19 +63,19 @@ class Chat {
         this.recognition.start()
       } catch (e) {}
     }, 200)
-    setInterval(() => {
-      if (!GLOBAL.remote) return
-      if (Date.now() - GLOBAL.lastTimeDigitalSpeak < REMOTE.timeBeforeThinkMS) {
-        return
-      }
-      if (!GLOBAL.mic || GLOBAL.digitalTalking) return
-      if (Math.random() > 0.08) return
-      GLOBAL.messages.push({
-        role: "system",
-        content: TEXT.ownThoughtsInstruction,
-      })
-      REMOTE.fetch()
-    }, 1000)
+    // setInterval(() => {
+    //   if (!GLOBAL.remote) return
+    //   if (Date.now() - GLOBAL.lastTimeDigitalSpeak < REMOTE.timeBeforeThinkMS) {
+    //     return
+    //   }
+    //   if (!GLOBAL.mic || GLOBAL.digitalTalking) return
+    //   if (Math.random() > 0.08) return
+    //   GLOBAL.messages.push({
+    //     role: "system",
+    //     content: TEXT.ownThoughtsInstruction,
+    //   })
+    //   REMOTE.fetch()
+    // }, 1000)
   }
   private addEvents(recognition) {
     EVENTS.onSingle("toggleMic", () => {

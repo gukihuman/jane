@@ -3,8 +3,6 @@ class Settings {
     keyboard: {
       toggleMic: "o",
       toggleRemote: "e",
-      toggleLanguage: "c",
-      toggleVoices: "u",
     },
     mouse: {},
     gamepad: {},
