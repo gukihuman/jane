@@ -1,29 +1,27 @@
 <template lang="pug">
-div(class="max-w-[1000px] mx-auto md:p-8 flex justify-center gap-2")
-  div(class="rounded-lg w-[720px] bg-gray-800 md:p-2")
-    div(class="w-full flex justify-center rounded-lg max-w-[700px] relative")
+div(class="max-w-[1000px] mx-auto md:p-8 flex justify-center gap-2 h-full")
+  div(class="rounded-lg w-[720px] bg-gray-700 md:p-2 h-full")
+    div(class="w-full h-full flex justify-center rounded-lg max-w-[700px] relative")
       div(
-        class="flex-col w-full h-full max-w-[700px] min-h-screen md:min-h-[500px] h-[500px]  rounded-lg overflow-y-scroll relative pb-8 md:pb-0 transition-all duration-100"
+        class="flex-col w-full h-full max-w-[700px] h-full md:min-h-[500px] h-[500px] rounded-lg overflow-y-scroll relative pb-8 md:pb-0 transition-all duration-100"
         :class="{'opacity-60 blur-sm': GLOBAL.language || GLOBAL.voices}"
         ref="chat"
       )
-        div(class="h-10 bg-gradient-to-b from-gray-900 to-gray-800")
-        div(class="p-4")
+        div(class="p-4 pt-12")
           p(
             v-for="(message, index) in GLOBAL.messages"
-            :key="'chat-' + index + '-' + GLOBAL.chatUpdateIndex"
-            class="p-2 rounded-lg text-[20px]"
+            :key="'chat-' + index + '-' + CHAT.updateIndex"
+            class="p-2 my-1 rounded-lg text-[20px]"
             :class="textClass(message)"
           ) {{message.content}}
-      //- header
-      div(class="w-full h-16 flex absolute h-10 bg-gradient-to-b from-gray-800 to-gray-800/70 p-2 mb-2 z-30")
-        settings
-        div(class="flex w-full justify-center")
-          indicators(class="mr-[65px]")
       //- settings
       transition: language(v-if="GLOBAL.language" class="z-10" :key="'lang-' + GLOBAL.updateSettings")
       transition: voices(v-if="GLOBAL.voices" class="z-10" :key="'voice-' + GLOBAL.updateSettings")
-keys(class="w-fit mx-auto hidden md:flex")
+      //- header
+      div(class="w-full h-16 flex absolute h-16 bg-gradient-to-b from-gray-700 to-gray-700/50 p-2 mb-2 z-30")
+        settings
+        div(class="flex w-full justify-center")
+          indicators(class="mr-[65px]")
 </template>
 <script setup lang="ts">
 const chat = ref(null) // to update

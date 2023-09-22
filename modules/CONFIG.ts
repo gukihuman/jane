@@ -11,9 +11,13 @@ class GukiConfig {
       }
     })
   }
+  init() {
+    const config = useRuntimeConfig().public
+    _.forEach(config, (value, key) => (this[key] = value))
+  }
   maxFPS = 60
   priority = {
     process: {},
   }
 }
-export const CONFIG = new GukiConfig()
+export const CONFIG: AnyObject = new GukiConfig()

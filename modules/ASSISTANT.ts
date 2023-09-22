@@ -1,59 +1,35 @@
-class Remote {
+class Assistant {
   timeBeforeThinkMS = 38_000
-  private endpoint
-  private apiKey
-  private clarifyEach = 5
-  private clarificationCounter = 0
-  private superShortInstructionChance = 0.3
   private abortController = new AbortController()
   resetAbortController = () => (this.abortController = new AbortController())
   init() {
-    const config = useRuntimeConfig().public
-    this.endpoint = config.OPEN_AI_ENDPOINT
-    this.apiKey = config.OPEN_AI_KEY
-    EVENTS.onSingle("toggleRemote", () => {
-      if (GLOBAL.remote) {
-        GLOBAL.remote = false
+    EVENTS.onSingle("toggleAssistant", () => {
+      if (GLOBAL.assistant) {
+        GLOBAL.assistant = false
         this.abort()
-      } else GLOBAL.remote = true
+      } else GLOBAL.assistant = true
     })
   }
   abort = () => this.abortController.abort()
-  async fetch() {
-    if (!GLOBAL.remote) return
+  async say() {
+    if (!GLOBAL.assistant) return
     GLOBAL.digitalTalking = true
-    if (this.clarificationCounter <= 0) {
-      this.clarificationCounter = this.clarifyEach
-      GLOBAL.messages.push({
-        role: "system",
-        content: TEXT.clarification,
-      })
-    }
-    this.clarificationCounter--
-    if (Math.random() < this.superShortInstructionChance) {
-      GLOBAL.messages.push({
-        role: "system",
-        content: TEXT.superShortInstruction,
-      })
-    }
-
     GLOBAL.messages = LIB.limitMessegesLength(GLOBAL.messages, 4096)
-    const body: AnyObject = {
-      model: "gpt-3.5-turbo",
-      messages: GLOBAL.messages,
-      temperature: 1.5,
-      stream: true,
-    }
-    const request: AnyObject = {
+    const request = {
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${this.apiKey}`,
+        Authorization: `Bearer ${CONFIG.OPEN_AI_KEY}`,
       },
       method: "POST",
-      body: JSON.stringify(body),
+      body: JSON.stringify({
+        model: "gpt-3.5-turbo",
+        messages: GLOBAL.messages,
+        temperature: 1.5,
+        stream: true,
+      }),
       signal: this.abortController.signal,
     }
-    let response: any = await fetch(this.endpoint, request)
+    let response: any = await fetch(CONFIG.OPEN_AI_ENDPOINT, request)
     const sseStream = response.body
     const reader = sseStream.getReader()
     let accumulator = ""
@@ -61,6 +37,7 @@ class Remote {
       role: "assistant",
       content: "",
     }
+    GLOBAL.messages.pop()
     GLOBAL.messages.push(digitalMessage)
     try {
       while (true) {
@@ -85,7 +62,6 @@ class Remote {
             if (!messageToAdd) continue
             digitalMessage.content += messageToAdd
             CHAT.update()
-            REFS.chat.scrollTop = REFS.chat.scrollHeight
           }
         }
       }
@@ -104,4 +80,4 @@ class Remote {
     }
   }
 }
-export const REMOTE = new Remote()
+export const ASSISTANT = new Assistant()

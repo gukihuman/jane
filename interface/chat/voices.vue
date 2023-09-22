@@ -4,8 +4,8 @@ div(class="w-full h-full absolute flex justify-center items-start overflow-y-scr
     div(
       v-for="(voice, index) in filteredVoices"
       :key="'lang-' + update + '-' + index"
-      class="text-center text-slate-400 text-[15px] bg-slate-700 font-bold p-2 rounded-lg min-w-[152px] cursor-pointer"
-      @click="handleClick(lang)"
+      class="text-center text-slate-400 text-[15px] font-bold p-2 rounded-lg min-w-[152px] cursor-pointer"
+      @click="handleClick(voice)"
       :class="{'bg-slate-600': SETTINGS.voice === voice.name}"
     ): span {{ clearedName(voice.name) }}
 </template>

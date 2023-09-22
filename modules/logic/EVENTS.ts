@@ -2,7 +2,7 @@ class Events {
   list: { [event: string]: Array<(AnyObject) => void> } = {}
   listOfSingle: { [event: string]: Array<() => void> } = {
     toggleMic: [],
-    toggleRemote: [],
+    toggleAssistant: [],
     toggleLanguage: [],
     toggleVoices: [],
     setLink: [],

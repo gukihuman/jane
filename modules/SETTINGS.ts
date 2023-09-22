@@ -2,7 +2,7 @@ class Settings {
   inputEvents = {
     keyboard: {
       toggleMic: "o",
-      toggleRemote: "e",
+      toggleAssistant: "e",
     },
     mouse: {},
     gamepad: {},
@@ -21,17 +21,6 @@ class Settings {
     })
   }
   init() {
-    let localSettings = {
-      inputEvents: this.inputEvents,
-      language: this.language,
-      voice: this.voice,
-    }
-    if (LOCAL.get("settings")) {
-      localSettings = LOCAL.get("settings")
-      _.forEach(localSettings, (value, key) => {
-        this[key] = value
-      })
-    } else LOCAL.add("settings", localSettings)
     WORLD.loop.add(() => {
       this.emitEvents()
     }, "SETTINGS")

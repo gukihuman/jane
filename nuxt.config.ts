@@ -7,9 +7,10 @@ export default defineNuxtConfig({
   },
   runtimeConfig: {
     public: {
-      COHERE_KEY: process.env.COHERE_KEY,
       OPEN_AI_ENDPOINT: process.env.OPEN_AI_ENDPOINT,
       OPEN_AI_KEY: process.env.OPEN_AI_KEY,
+      PINECONE_KEY: process.env.PINECONE_KEY,
+      COHERE_KEY: process.env.COHERE_KEY,
     },
   },
   modules: [

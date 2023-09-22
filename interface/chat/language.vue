@@ -4,7 +4,7 @@ div(class="w-full h-full absolute flex justify-center items-start overflow-y-scr
     div(
       v-for="(lang, index) in VOICE.languages"
       :key="'lang-' + update + '-' + index"
-      class="text-center text-slate-400 bg-slate-700 font-bold p-2 rounded-lg min-w-[152px] cursor-pointer"
+      class="text-center text-slate-400 font-bold p-2 rounded-lg min-w-[152px] cursor-pointer"
       @click="handleClick(lang)"
       :class="{'bg-slate-600': SETTINGS.language === lang}"
     ): span {{ lang }}

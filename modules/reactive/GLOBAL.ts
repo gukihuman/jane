@@ -1,7 +1,6 @@
 const store: AnyObject = {
-  chatUpdateIndex: 0, // used as reactive dependency
-  updateSettings: 0, // same
-  remote: false,
+  updateSettings: 0, // used as reactive dependency
+  assistant: false,
   mic: false,
   language: false,
   voices: false,
@@ -16,17 +15,5 @@ const store: AnyObject = {
     },
   ],
   lastTimeDigitalSpeak: Date.now(),
-  init() {
-    let localGlobal = {
-      remote: this.remote,
-      mic: this.mic,
-    }
-    if (LOCAL.get("global")) {
-      localGlobal = LOCAL.get("global")
-      _.forEach(localGlobal, (value, key) => {
-        this[key] = value
-      })
-    } else LOCAL.add("global", localGlobal)
-  },
 }
 export const GLOBAL = LIB.store(store)
