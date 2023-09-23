@@ -1,10 +1,11 @@
 class Remote {
-  private endpoint = process.env.OPEN_AI_ENDPOINT as string
-  private apiKey = process.env.OPEN_AI_KEY as string
+  private openAiEndpoint = process.env.OPEN_AI_ENDPOINT as string
+  private openAiKey = process.env.OPEN_AI_KEY as string
+  private cohereKey = process.env.COHERE_KEY as string
   private abortController = new AbortController()
   resetAbortController = () => (this.abortController = new AbortController())
   abort = () => this.abortController.abort()
-  async fetch(messages: Messages) {
+  async fetchOpenAi(messages: Messages) {
     const body: AnyObject = {
       model: "gpt-3.5-turbo",
       messages: messages,
@@ -14,13 +15,13 @@ class Remote {
     const request: AnyObject = {
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${this.apiKey}`,
+        Authorization: `Bearer ${this.openAiKey}`,
       },
       method: "POST",
       body: JSON.stringify(body),
       signal: this.abortController.signal,
     }
-    let response: any = await fetch(this.endpoint, request)
+    let response: any = await fetch(this.openAiEndpoint, request)
     const sseStream = response.body
     const reader = sseStream.getReader()
     let accumulator = ""
@@ -58,6 +59,24 @@ class Remote {
       reader.releaseLock()
       return digitalMessage.content
     }
+  }
+  async fetchCohereVector(text: string) {
+    const body: AnyObject = {
+      texts: [text],
+      model: "embed-multilingual-v2.0",
+    }
+    const request: AnyObject = {
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${this.cohereKey}`,
+      },
+      method: "POST",
+      body: JSON.stringify(body),
+    }
+    const response = await fetch("https://api.cohere.ai/v1/embed", request)
+    const data = await response.json()
+    return data
   }
 }
 export const REMOTE = new Remote()

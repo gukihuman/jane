@@ -1,5 +1,4 @@
 class Assistant {
-  timeBeforeThinkMS = 38_000
   private abortController = new AbortController()
   resetAbortController = () => (this.abortController = new AbortController())
   init() {

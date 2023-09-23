@@ -1,39 +1,39 @@
-modules\CONFIG.ts: This TypeScript class, "GukiConfig," manages configuration settings for a game or application by merging user-defined configurations with defaults. It utilizes the Lodash library for merging and defines properties like "viewport," "maxFPS," and "priority" for execution order. It also handles scene-related parameters and exports an instance as "CONFIG."
+modules\CONFIG.ts: This TypeScript module handles game configuration by merging user-defined settings with defaults. It covers aspects like viewport dimensions, max FPS, and component/system priorities, affecting game logic order.
 
-modules\EFFECTS.ts: This TypeScript class, "Effects," manages visual effects in the game. It handles front and back effects with durations, initializes the effects system, and removes expired effect containers. These effects are associated with entities and exported as "EFFECTS."
+modules\EFFECTS.ts: This class, "Effects," manages visual effects in the game. It handles front and back effects, cleaning up expired ones and exporting as "EFFECTS" for use in animations.
 
-modules\logic\COORDINATES.ts: This file defines two TypeScript classes, "Vector" and "Coordinates," for handling coordinate-related calculations in the game logic. "Vector" represents two-dimensional vectors, and "Coordinates" provides functions for various coordinate transformations, distances, and more. An instance of "Coordinates" is exported as "COORDINATES."
+modules\logic\COORDINATES.ts: This utility module provides functions and classes for managing coordinates and vectors within the game engine, simplifying character movements and interactions.
 
-modules\logic\ENTITY_FACTORY.ts: This TypeScript file defines the "EntityFactory" class responsible for creating and configuring game entities. It includes methods for entity creation, component injection, and merging. The class plays a crucial role in managing entity creation and configuration in the game logic.
+modules\logic\ENTITY_FACTORY.ts: This TypeScript class, "EntityFactory," creates game entities with specific components and properties. It handles entity creation, component injection, and dependencies.
 
-modules\logic\EVENTS.ts: This TypeScript class, "Events," manages event-driven logic in the game or application. It handles regular and single events, allowing logic functions with or without data arguments. Methods for event management, emission, and execution are provided, making this file essential for controlling gameplay and interactions.
+modules\logic\EVENTS.ts: The "Events" class manages event handling with methods for adding, emitting, and limiting event executions. It plays a key role in managing in-game events.
 
-modules\logic\LIB.ts: This TypeScript class, "Lib," offers a wide range of utility functions, including getters, time formatting, logging with timestamps, deep cloning, gamepad dead zone checks, object key sorting, random string generation, and more. It also modifies the behavior of a PIXI.Spritesheet instance. An instance named "LIB" is exported, providing fundamental utility functions for various purposes.
+modules\logic\LIB.ts: This "Lib" class offers utility functions for various tasks, including object manipulation, logging, random string generation, and more, aiding overall game development.
 
-modules\logic\LOCAL.ts: This TypeScript class, "Local," manages local game data using the browser's localStorage. It handles data synchronization, updates, storage, retrieval, and parsing. The class ensures the persistence of local game data and is exported as "LOCAL."
+modules\logic\LOCAL.ts: The "Local" class handles local storage for game state data, syncing inventory and hero position. It initializes, processes, and exports as "LOCAL" for state management.
 
-modules\logic\SPRITE.ts: This TypeScript class, "Spr," appears to manage entities, effects, and items in the game. It handles entity creation, effects, and items like weapons and clothing, offering various customization options. This class likely plays a central role in the game's graphics and animation system.
+modules\logic\SPRITE.ts: This class, "Spr," manages sprite animations for entities, effects, and items in the game. It handles creation, placement, and clearing of animations.
 
-modules\reactive\ACTIVE_SCENE.ts: This file defines the "activeScene" object, representing a game scene. It handles scene-related properties, initialization, progression, and data updates. The "ACTIVE_SCENE" object is exported for accessing and manipulating scene data.
+modules\reactive\ACTIVE_SCENE.ts: The "activeScene" object manages scenes, choices, and transitions within the game, enabling dynamic storytelling and interaction.
 
-modules\reactive\GLOBAL.ts: This file defines the "global" object containing global game settings and variables. It manages the game context, scale, fullscreen, loading state, and more. The "GLOBAL" object is exported for maintaining global game state and configuration.
+modules\reactive\GLOBAL.ts: This object, "global," controls the game's global state and context switching between "world" and "interface," facilitating UI and game world state transitions.
 
-modules\reactive\INTERFACE.ts: This file defines the "inter" object, which manages the game's user interface settings. It handles overlays, inventory, target information, and context-based initialization. The "INTERFACE" object is exported for controlling the game's reactive interface.
+modules\reactive\INTERFACE.ts: The "inter" object manages user interface elements and their states, adjusting them based on game context and player interactions.
 
-modules\reactive\INVENTORY.ts: This file defines the "inventory" object, responsible for managing a character's inventory. It includes sections for equipped items and inventory items, along with event listeners for inventory actions. The "INVENTORY" constant allows dynamic item management.
+modules\reactive\INVENTORY.ts: This module defines an inventory system with "equipped" and "bag" containers for items, handling equipping, unequipping, and UI updates.
 
-modules\reactive\REFS.ts: This file defines the "refs" object for managing references related to fullscreen and viewport settings. It exports a "REFS" constant, likely used to maintain dynamic references in a larger application or module.
+modules\reactive\REFS.ts: This module exports an object, "refs," likely for managing references or handles to elements in a reactive context.
 
-modules\SETTINGS.ts: This TypeScript class, "Settings," manages game settings and input event mappings. It configures input events for devices like keyboard, mouse, and gamepad, allowing customization of controls. The class exports an instance as "SETTINGS," making game settings accessible.
+modules\SETTINGS.ts: The "Settings" class manages game settings and input configurations, including keybindings, gamepad sensitivity, and gameplay options.
 
-modules\storage\ASSETS.ts: This TypeScript class, "Assets," manages game assets, including WebP images and JSON files. It provides storage for these assets and is essential for handling game resources and rendering.
+modules\storage\ASSETS.ts: This class, "Assets," manages webps and JSONs, auto-importing them into the application and exporting as "ASSETS" for easy access.
 
-modules\storage\ITEMS.ts: This file defines the "Items" class for managing game items, specifically clothing and weapons. It exports an instance as "ITEMS" for organizing and storing items in the game.
+modules\storage\ITEMS.ts: This class manages items, such as clothing and weapons, with "clothes" and "weapons" containers. It handles item management and exporting as "ITEMS."
 
-modules\storage\LAST.ts: This file defines the "Last" class, serving as a storage utility for maintaining game state information. It exports an instance as "LAST," allowing for snapshot and data storage.
+modules\storage\LAST.ts: The "Last" class stores snapshots of game state, including entities, hero, hover objects, and scenePart. It updates periodically and exports as "LAST."
 
-modules\storage\MODELS.ts: This file defines the "Models" class, serving as a repository for game entities, components, and systems. It provides organization and accessibility of key game assets and is exported as "MODELS."
+modules\storage\MODELS.ts: This class, "Models," serves as a container for game-related data structures, including entities, components, and systems, exported as "MODELS."
 
-modules\storage\SCENE.ts: This TypeScript class, "Scene," is related to managing scenes or story progression. It handles parsing and organizing scene-related data from markdown files and is essential for interactive story-driven content.
+modules\storage\SCENE.ts: The "Scene" class manages scenes and text-based content, parsing Markdown and plain text to organize scenes, images, text, and choices for dynamic storytelling.
 
-modules\storage\SKILLS.ts: This file defines the "Skills" class, serving as a storage container for a list of skills in the game. It exports an instance as "SKILLS" for managing and storing skills data.
+modules\storage\SKILLS.ts: This module, "Skills," manages game skills, likely storing information about different skills and exporting as "SKILLS" for use in gameplay.

@@ -18,6 +18,7 @@ class Local {
     this.localGlobal = {
       assistant: GLOBAL.assistant,
       mic: GLOBAL.mic,
+      chat: GLOBAL.chat,
     }
   }
   init() {

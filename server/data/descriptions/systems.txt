@@ -1,37 +1,37 @@
-systems\devmode.ts: This class manages developer-specific actions and configurations in the game, responding to keyboard inputs to toggle edit mode, collision visibility, input interface, and log world information when the devMode is active.
+systems\devmode.ts: This class manages game development mode, listening for specific keyboard inputs to trigger actions related to development and debugging. It interacts with the global variable `devMode` to control actions like toggling edit mode, collision detection, logging hover state, and toggling the input interface.
 
-systems\environment\collision.ts: This class handles collision detection and visualization in the game environment, managing a collision grid, toggling collision visibility, editing collision data, and rendering a debug grid.
+systems\environment\collision.ts: This class handles collision functionality, managing collision data for the game world. It provides methods for initializing collision settings, processing updates, toggling collision visibility, and drawing a collision grid for debugging. It also supports downloading collision data in JSON format.
 
-systems\environment\map.ts: This class is responsible for managing the game's map environment, dynamically loading and updating map chunks as the player moves, ensuring an efficient map rendering system.
+systems\environment\map.ts: This class focuses on managing the game environment, particularly handling game world chunks. It loads and updates chunks around the player's position, optimizing performance. It uses PIXI.js for sprite handling and provides functions for chunk initialization and processing.
 
-systems\gameplay\cast.ts: This class manages casting abilities and spells in the game, handling targeting, damage dealing, skill effects, timing, and synchronization of animations with the casting process.
+systems\gameplay\cast.ts: This class is responsible for skill casting in the game, specifically for the player character. It listens for game events related to casting skills, manages the casting logic, deals damage to targets, and handles skill delays and outcomes.
 
-systems\gameplay\revenge.ts: This class handles revenge actions in the game, triggering attacks under specific conditions and responding to events related to entity attacks.
+systems\gameplay\revenge.ts: This class handles revenge or counter-attack events in the game. It responds to "revenge" events by checking conditions and triggering actions like setting the target and emitting "cast" events. It is event-driven.
 
-systems\gameplay\target.ts: This class manages target selection and locking in the game, setting criteria for targeting entities based on distance, type, and input method.
+systems\gameplay\target.ts: This class manages target selection and locking in the game. It sets up event listeners for targeting, handles target locking and switching, and considers input devices (mouse or gamepad). It ensures smooth target selection during gameplay.
 
-systems\gameplay\track.ts: This class enables entities to track and interact with other entities in the game world, calculating final destinations and determining when actions can be performed.
+systems\gameplay\track.ts: This class processes character tracking behavior. It checks entities for tracking states and targets, setting the "cast" state when in range. It aids combat and interactions in the game world.
 
-systems\hover.ts: This class handles hover interactions in the game, detecting entity interactions when the mouse cursor is over them and selecting the topmost intersecting entity.
+systems\hover.ts: This class determines which in-game entity the cursor is hovering over. The `process` method calculates intersections with entity bounding boxes, updates hover states, and maintains the `WORLD.hoverId` and `WORLD.hover` properties.
 
-systems\input.ts: This class manages user input within the game, initializing and continuously updating input information, preventing unintended movements on startup.
+systems\input.ts: This class manages input in the game. It initializes input handling and updates input data, ensuring it reflects user actions. It prevents unintended mouse movement to (0, 0).
 
-systems\lifecycle\dead.ts: This class manages the "dead" state of entities, handling entity death, fading out animations, and removing entities from the game world.
+systems\lifecycle\dead.ts: This class manages entities in a "dead" state. It marks entities with low health as "dead," tracks time of death, clears targets, and handles animation effects.
 
-systems\lifecycle\remove.ts: This class processes the removal of deceased entities, ensuring efficient memory usage and maintaining the game's state.
+systems\lifecycle\remove.ts: This class removes "dead" entities from the game world. It checks for entities in a "dead" state and removes their visual representation and data.
 
-systems\lifecycle\spawn.ts: This class controls entity spawning and despawning, distributing entities within chunks and removing entities no longer close to the player.
+systems\lifecycle\spawn.ts: This class handles entity spawning and despawning in the game world. It manages population in specific locations, spawning initial entities during initialization and handling continuous population changes.
 
-systems\motion\astar.ts: This class implements the A* pathfinding algorithm, facilitating entity navigation through grid-based terrain.
+systems\motion\astar.ts: This class implements the A* pathfinding algorithm for entity navigation. It handles grid initialization, pathfinding for multiple entities, and factors like terrain walkability and collision avoidance.
 
-systems\motion\destination.ts: This class sets random destinations for idle entities, adding unpredictability to their movements.
+systems\motion\destination.ts: This class assigns random destinations to non-hero entities. It considers entity states and collision data, controlling when and where destinations are set.
 
-systems\motion\move.ts: This class manages character movements, including mouse-based, gamepad-based, and automated movements, handling various game events and states.
+systems\motion\move.ts: This class manages character movements. It sets up event listeners for movement-related events, processes character movements based on context, and handles various input methods.
 
-systems\state.ts: This class processes entity states in the game, categorizing entities based on conditions, handling "dead" states, and tracking state change timestamps.
+systems\state.ts: This class manages entity states, such as "dead," "casting," "tracking," and "idle." It updates states based on conditions, tracks changes, and checks for entity motion.
 
-systems\visual\filters.ts: This class manages visual filters in the game, including bloom and adjustment filters, applying them to game entities based on the hero character's target.
+systems\visual\filters.ts: This class manages visual filters, including "hover" and "tracked." It initializes and applies these filters to game objects and updates them based on game state.
 
-systems\visual\flip.ts: This class handles visual flipping of entities, determining when to flip their visuals based on movements and interactions.
+systems\visual\flip.ts: This class handles sprite flipping for entities based on movement and attack directions. It updates sprite scale based on entity positions to ensure correct visual representation.
 
-systems\visual\sprite.ts: This class manages sprite animations and visual aspects of entities, updating animations, positions, and visibility based on entity states and movements.
+systems\visual\sprite.ts: This class manages sprite animations and visual properties for entities. It updates animations, coordinates, and visibility for each entity with a sprite and position. It handles various entity states and animations.

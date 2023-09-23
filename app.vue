@@ -1,7 +1,7 @@
 <template lang="pug">
 div(class="bg-gray-800 w-full h-full min-h-screen")
   gmenu
-  chat
+  chat(v-if="GLOBAL.chat")
 </template>
 <style>
 .v-enter-active,

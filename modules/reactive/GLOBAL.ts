@@ -1,4 +1,6 @@
 const store: AnyObject = {
+  // chat
+  chat: false,
   updateSettings: 0, // used as reactive dependency
   assistant: false,
   mic: false,
@@ -6,14 +8,11 @@ const store: AnyObject = {
   voices: false,
   userTalking: false,
   digitalTalking: false,
-  recognizing: true,
-  userLine: "",
   messages: [
     {
       role: "system",
-      content: TEXT.systemMessage,
+      content: PROMPTS.systemMessage,
     },
   ],
-  lastTimeDigitalSpeak: Date.now(),
 }
 export const GLOBAL = LIB.store(store)
