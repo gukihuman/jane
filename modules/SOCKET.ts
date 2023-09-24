@@ -6,6 +6,10 @@ class Socket {
     this.io.on("log", (string) => {
       console.log(string)
     })
+    this.io.on("filePaths", (filePaths) => {
+      GLOBAL.filePaths = filePaths
+      LOCAL.update()
+    })
   }
 }
 export const SOCKET = new Socket()

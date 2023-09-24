@@ -1,4 +1,5 @@
 const store: AnyObject = {
+  filePaths: [],
   // chat
   chat: false,
   updateSettings: 0, // used as reactive dependency

@@ -9,7 +9,9 @@ export default defineNuxtConfig({
     public: {
       OPEN_AI_ENDPOINT: process.env.OPEN_AI_ENDPOINT,
       OPEN_AI_KEY: process.env.OPEN_AI_KEY,
+      PINECONE_ENDPOINT: process.env.PINECONE_ENDPOINT,
       PINECONE_KEY: process.env.PINECONE_KEY,
+      COHERE_ENDPOINT: process.env.COHERE_ENDPOINT,
       COHERE_KEY: process.env.COHERE_KEY,
     },
   },

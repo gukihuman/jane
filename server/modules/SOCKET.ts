@@ -4,6 +4,7 @@ import { REMOTE } from "./REMOTE"
 import { PROMPTS } from "./PROMPTS"
 import { SETTINGS } from "./SETTINGS"
 import { LIB } from "./LIB"
+import vectorArray from "../data/descriptionsVectors.json"
 class Socket {
   io
   descriptions: any[] = []
@@ -99,7 +100,7 @@ class Socket {
       for (const vector of vectorsArray) {
         const filledVector: any = vector
         const response = await REMOTE.fetchCohereVector(vector.description)
-        filledVector.embed = response.embeddings[0]
+        filledVector.embedding = response.embeddings[0]
         descriptionsVectors.push(filledVector)
         this.io.emit("log", `✎ ${filledVector.path}`)
         await LIB.delay(31_000) // cohere limits 2 requests per minute
@@ -110,6 +111,24 @@ class Socket {
       JSON.stringify(descriptionsVectors, null, 2)
     )
     this.io.emit("log", `✔📄 descriptionsVectors.json`)
+  }
+  async upsertVectors() {
+    this.io.emit("log", `✎ upsertVectors`)
+    for (const vector of vectorArray) await REMOTE.upsertPineconeVector(vector)
+    this.io.emit("log", `✔ upsertVectors`)
+  }
+  async queryRelevantFiles(text) {
+    this.io.emit("log", `✎ queryRelevantFiles`)
+    const cohereResponse = await REMOTE.fetchCohereVector(text)
+    if (cohereResponse.message) {
+      this.io.emit("log", "❌ cohere limit exceeded (2 per min)")
+      return
+    }
+    const embedding = cohereResponse.embeddings[0]
+    const pineconeResponse = await REMOTE.queryPineconeVector(embedding)
+    const filePaths = pineconeResponse.matches.map((file) => file.id)
+    this.io.emit("filePaths", filePaths)
+    this.io.emit("log", filePaths)
   }
 }
 export const SOCKET = new Socket()

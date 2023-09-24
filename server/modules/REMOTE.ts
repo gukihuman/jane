@@ -1,7 +1,11 @@
+import { SOCKET } from "./SOCKET"
 class Remote {
   private openAiEndpoint = process.env.OPEN_AI_ENDPOINT as string
   private openAiKey = process.env.OPEN_AI_KEY as string
+  private cohereEndpoint = process.env.COHERE_ENDPOINT as string
   private cohereKey = process.env.COHERE_KEY as string
+  private pineconeEndpoint = process.env.PINECONE_ENDPOINT as string
+  private pineconeKey = process.env.PINECONE_KEY as string
   private abortController = new AbortController()
   resetAbortController = () => (this.abortController = new AbortController())
   abort = () => this.abortController.abort()
@@ -74,7 +78,47 @@ class Remote {
       method: "POST",
       body: JSON.stringify(body),
     }
-    const response = await fetch("https://api.cohere.ai/v1/embed", request)
+    const response = await fetch(this.cohereEndpoint, request)
+    const data = await response.json()
+    return data
+  }
+  async upsertPineconeVector(vector: Vector) {
+    const body: AnyObject = {
+      vectors: [{ values: vector.embedding, id: vector.path }],
+    }
+    const request: AnyObject = {
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        "Api-Key": `${this.pineconeKey}`,
+      },
+      method: "POST",
+      body: JSON.stringify(body),
+    }
+    const response = await fetch(
+      this.pineconeEndpoint + "/vectors/upsert",
+      request
+    )
+    const data = await response.json()
+    return data
+  }
+  async queryPineconeVector(embedding: number[]) {
+    const body: AnyObject = {
+      vector: embedding,
+      topK: 15,
+      includeValues: false,
+      includeMetadata: false,
+    }
+    const request: AnyObject = {
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        "Api-Key": `${this.pineconeKey}`,
+      },
+      method: "POST",
+      body: JSON.stringify(body),
+    }
+    const response = await fetch(this.pineconeEndpoint + "/query", request)
     const data = await response.json()
     return data
   }

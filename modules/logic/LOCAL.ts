@@ -16,6 +16,7 @@ class Local {
       voice: SETTINGS.voice,
     }
     this.localGlobal = {
+      filePaths: GLOBAL.filePaths,
       assistant: GLOBAL.assistant,
       mic: GLOBAL.mic,
       chat: GLOBAL.chat,

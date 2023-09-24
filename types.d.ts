@@ -8,4 +8,9 @@ declare global {
     role: string
     content: string
   }[]
+  type Vector = {
+    path: string
+    description: string
+    embedding: number[]
+  }
 }
