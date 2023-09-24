@@ -120,10 +120,6 @@ class Socket {
   async queryRelevantFiles(text) {
     this.io.emit("log", `✎ queryRelevantFiles`)
     const cohereResponse = await REMOTE.fetchCohereVector(text)
-    if (cohereResponse.message) {
-      this.io.emit("log", "❌ cohere limit exceeded (2 per min)")
-      return
-    }
     const embedding = cohereResponse.embeddings[0]
     const pineconeResponse = await REMOTE.queryPineconeVector(embedding)
     const filePaths = pineconeResponse.matches.map((file) => file.id)

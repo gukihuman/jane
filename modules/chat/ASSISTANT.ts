@@ -17,7 +17,7 @@ class Assistant {
     const request = {
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${CONFIG.OPEN_AI_KEY}`,
+        Authorization: `Bearer ${CONFIG.OPENAI_KEY}`,
       },
       method: "POST",
       body: JSON.stringify({
@@ -28,7 +28,7 @@ class Assistant {
       }),
       signal: this.abortController.signal,
     }
-    let response: any = await fetch(CONFIG.OPEN_AI_ENDPOINT, request)
+    let response: any = await fetch(CONFIG.OPENAI_ENDPOINT, request)
     const sseStream = response.body
     const reader = sseStream.getReader()
     let accumulator = ""

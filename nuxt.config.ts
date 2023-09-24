@@ -7,8 +7,8 @@ export default defineNuxtConfig({
   },
   runtimeConfig: {
     public: {
-      OPEN_AI_ENDPOINT: process.env.OPEN_AI_ENDPOINT,
-      OPEN_AI_KEY: process.env.OPEN_AI_KEY,
+      OPENAI_ENDPOINT: process.env.OPENAI_ENDPOINT,
+      OPENAI_KEY: process.env.OPENAI_KEY,
       PINECONE_ENDPOINT: process.env.PINECONE_ENDPOINT,
       PINECONE_KEY: process.env.PINECONE_KEY,
       COHERE_ENDPOINT: process.env.COHERE_ENDPOINT,

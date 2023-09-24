@@ -1,11 +1,6 @@
 import { SOCKET } from "./SOCKET"
+import { LIB } from "./LIB"
 class Remote {
-  private openAiEndpoint = process.env.OPEN_AI_ENDPOINT as string
-  private openAiKey = process.env.OPEN_AI_KEY as string
-  private cohereEndpoint = process.env.COHERE_ENDPOINT as string
-  private cohereKey = process.env.COHERE_KEY as string
-  private pineconeEndpoint = process.env.PINECONE_ENDPOINT as string
-  private pineconeKey = process.env.PINECONE_KEY as string
   private abortController = new AbortController()
   resetAbortController = () => (this.abortController = new AbortController())
   abort = () => this.abortController.abort()
@@ -19,13 +14,16 @@ class Remote {
     const request: AnyObject = {
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${this.openAiKey}`,
+        Authorization: `Bearer ${process.env.OPENAI_KEY}`,
       },
       method: "POST",
       body: JSON.stringify(body),
       signal: this.abortController.signal,
     }
-    let response: any = await fetch(this.openAiEndpoint, request)
+    let response: any = await fetch(
+      process.env.OPENAI_ENDPOINT as string,
+      request
+    )
     const sseStream = response.body
     const reader = sseStream.getReader()
     let accumulator = ""
@@ -65,20 +63,50 @@ class Remote {
     }
   }
   async fetchCohereVector(text: string) {
+    const truncatedText = LIB.truncateWords(text, 480)
     const body: AnyObject = {
-      texts: [text],
+      texts: [truncatedText],
       model: "embed-multilingual-v2.0",
     }
     const request: AnyObject = {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
-        Authorization: `Bearer ${this.cohereKey}`,
+        Authorization: `Bearer ${process.env.COHERE_KEY}`,
       },
       method: "POST",
       body: JSON.stringify(body),
     }
-    const response = await fetch(this.cohereEndpoint, request)
+    const response = await fetch(process.env.COHERE_ENDPOINT as string, request)
+    const data = await response.json()
+    if (data.message) {
+      const limit = data.message.match(/\d+/g)
+      SOCKET.io.emit(
+        "log",
+        `cohere limit exceeded (${limit[0]} per min) nlpcloud is used`
+      )
+      const backup = await this.fetchNlpcloudVector(truncatedText)
+      return backup
+    }
+    return data
+  }
+  // used as a backup for cohere
+  private async fetchNlpcloudVector(text: string) {
+    const body: AnyObject = {
+      sentences: [text],
+    }
+    const request: AnyObject = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Token ${process.env.NLPCLOUD_KEY}`,
+      },
+      method: "POST",
+      body: JSON.stringify(body),
+    }
+    const response = await fetch(
+      process.env.NLPCLOUD_ENDPOINT as string,
+      request
+    )
     const data = await response.json()
     return data
   }
@@ -90,13 +118,13 @@ class Remote {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
-        "Api-Key": `${this.pineconeKey}`,
+        "Api-Key": `${process.env.PINECONE_KEY}`,
       },
       method: "POST",
       body: JSON.stringify(body),
     }
     const response = await fetch(
-      this.pineconeEndpoint + "/vectors/upsert",
+      process.env.PINECONE_ENDPOINT + "/vectors/upsert",
       request
     )
     const data = await response.json()
@@ -113,12 +141,15 @@ class Remote {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
-        "Api-Key": `${this.pineconeKey}`,
+        "Api-Key": `${process.env.PINECONE_KEY}`,
       },
       method: "POST",
       body: JSON.stringify(body),
     }
-    const response = await fetch(this.pineconeEndpoint + "/query", request)
+    const response = await fetch(
+      process.env.PINECONE_ENDPOINT + "/query",
+      request
+    )
     const data = await response.json()
     return data
   }
